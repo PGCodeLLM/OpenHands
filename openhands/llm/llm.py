@@ -203,6 +203,11 @@ class LLM(RetryMixin, DebugMixin):
             kwargs['max_tokens'] = self.config.max_output_tokens
             kwargs.pop('max_completion_tokens')
 
+        for extra_param in self.config.extra_params:
+            # values in extra_params takes lower priority and only apply if it is configured
+            if extra_param not in kwargs:
+                kwargs[extra_param] = self.config.extra_params[extra_param]
+
         # Add safety settings for models that support them
         if 'mistral' in self.config.model.lower() and self.config.safety_settings:
             kwargs['safety_settings'] = self.config.safety_settings
