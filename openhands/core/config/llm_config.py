@@ -91,6 +91,7 @@ class LLMConfig(BaseModel):
         default=None,
         description='Safety settings for models that support them (like Mistral AI and Gemini)',
     )
+    extra_params: dict[str, Any] = Field(default=None)
 
     model_config = ConfigDict(extra='forbid')
 
