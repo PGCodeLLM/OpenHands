@@ -17,6 +17,7 @@ from litellm import Message as LiteLLMMessage
 from litellm import ModelInfo, PromptTokensDetails
 from litellm import completion as litellm_completion
 from litellm import completion_cost as litellm_completion_cost
+from litellm import stream_chunk_builder
 from litellm.exceptions import (
     RateLimitError,
     ServiceUnavailableError,
@@ -335,6 +336,10 @@ class LLM(RetryMixin, DebugMixin):
                     category=DeprecationWarning,
                 )
                 resp: ModelResponse = self._completion_unwrapped(*args, **kwargs)
+
+            if self.config.extra_params and "stream" in self.config.extra_params and self.config.extra_params["stream"]:
+                chuncks = [chunck for chunck in resp]
+                resp = stream_chunk_builder(chuncks)
 
             # Calculate and record latency
             latency = time.time() - start_time
