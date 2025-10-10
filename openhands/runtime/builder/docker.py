@@ -2,6 +2,7 @@ import datetime
 import os
 import subprocess
 import time
+import multiprocessing
 
 import docker
 
@@ -12,6 +13,8 @@ from openhands.core.logger import openhands_logger as logger
 from openhands.runtime.builder.base import RuntimeBuilder
 from openhands.utils.term_color import TermColor, colorize
 
+docker_runtime_builder_concurrency = int(os.getenv("DOCKER_RUNTIME_BUILDER_CONCURRENCY", 5))
+build_semaphore = multiprocessing.Semaphore(docker_runtime_builder_concurrency)
 
 class DockerRuntimeBuilder(RuntimeBuilder):
     def __init__(self, docker_client: docker.DockerClient):
@@ -168,6 +171,7 @@ class DockerRuntimeBuilder(RuntimeBuilder):
         )
 
         try:
+            build_semaphore.acquire()
             process = subprocess.Popen(
                 buildx_cmd,
                 stdout=subprocess.PIPE,
@@ -214,10 +218,11 @@ class DockerRuntimeBuilder(RuntimeBuilder):
                 f'Permission denied when trying to execute the build command:\n{e}'
             )
             raise
-
         except Exception as e:
             logger.error(f'An unexpected error occurred during the build process: {e}')
             raise
+        finally:
+            build_semaphore.release()
 
         logger.info(f'Image [{target_image_hash_name}] build finished.')
 
