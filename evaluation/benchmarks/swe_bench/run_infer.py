@@ -895,15 +895,17 @@ if __name__ == '__main__':
             logger.info(
                 f'Evaluating {len(instances)} instances for attempt {attempt}...'
             )
+            instance_eval_timeout = int(os.getenv("SWEBENCH_INSTANCE_EVAL_TIMEOUT", 8))
+            logger.info(f"Instance eval timeout: {instance_eval_timeout}h")
             run_evaluation(
                 instances,
                 metadata,
                 cur_output_file,
                 args.eval_num_workers,
                 process_instance,
-                timeout_seconds=8
+                timeout_seconds=instance_eval_timeout
                 * 60
-                * 60,  # 8 hour PER instance should be more than enough
+                * 60,  # `instance_eval_timeout` hours PER instance
                 max_retries=5,
             )
 
