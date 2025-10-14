@@ -415,6 +415,7 @@ class DockerRuntime(ActionExecutionClient):
                 environment=environment,
                 volumes=volumes,  # type: ignore
                 device_requests=device_requests,
+                extra_hosts={"host.docker.internal": "host-gateway"},
                 **(self.config.sandbox.docker_runtime_kwargs or {}),
             )
             self.log('debug', f'Container started. Server url: {self.api_url}')
