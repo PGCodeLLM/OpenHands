@@ -287,6 +287,15 @@ def prep_build_folder(
             src = Path(project_root, file)
         shutil.copy2(src, Path(build_folder, 'code', file))
 
+    # Copy all certificates from certs directory if it exists
+    certs_dir = Path('certs')
+    if certs_dir.exists() and certs_dir.is_dir():
+        dest_certs_dir = Path(build_folder, 'certs')
+        dest_certs_dir.mkdir(parents=True, exist_ok=True)
+        for cert_file in certs_dir.iterdir():
+            if cert_file.is_file():
+                shutil.copy2(cert_file, dest_certs_dir / cert_file.name)
+        
     # Create a Dockerfile and write it to build_folder
     dockerfile_content = _generate_dockerfile(
         base_image,
