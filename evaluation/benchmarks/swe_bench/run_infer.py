@@ -170,7 +170,7 @@ logger.info(f'Default docker image prefix: {DEFAULT_DOCKER_IMAGE_PREFIX}')
 
 def get_instance_docker_image(
     instance_id: str,
-    swebench_official_image: bool = False,
+    swebench_official_image: bool = True,
 ) -> str:
     if swebench_official_image:
         # Official SWE-Bench image
@@ -179,7 +179,10 @@ def get_instance_docker_image(
         if DATASET_TYPE == 'SWE-bench-Live':
             docker_image_prefix = 'docker.io/starryzhang/'
         elif DATASET_TYPE == 'SWE-bench':
-            docker_image_prefix = 'docker.io/swebench/'
+            if os.environ.get('USE_LOGICSTAR', 'false').lower() == 'true':
+                docker_image_prefix = '10.10.100.19:5000/swebench/'
+            else:
+                docker_image_prefix = 'docker.io/swebench/'
         repo, name = instance_id.split('__')
         image_name = f'{docker_image_prefix.rstrip("/")}/sweb.eval.x86_64.{repo}_1776_{name}:latest'.lower()
         logger.debug(f'Using official SWE-Bench image: {image_name}')

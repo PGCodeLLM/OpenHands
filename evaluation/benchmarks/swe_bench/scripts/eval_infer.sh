@@ -92,6 +92,13 @@ if [[ "$ENVIRONMENT" == "modal" ]]; then
     MODAL_FLAG="--modal true"
 fi
 
+if [ "$USE_LOGICSTAR" == "true" ]; then
+    echo "Using LogicStar compressed images for official SWE-bench verified runs"
+    export NAMESPACE=10.10.100.19:5001/logicstar
+else
+    export NAMESPACE=docker.io/swebench
+fi
+
 if [ -z "$INSTANCE_ID" ]; then
     echo "Running SWE-bench evaluation on the whole input file..."
     # Default to SWE-Bench-lite
@@ -105,6 +112,7 @@ if [ -z "$INSTANCE_ID" ]; then
         --cache_level instance \
         --max_workers $N_PROCESS \
         --run_id $RUN_ID \
+        --namespace $NAMESPACE \
         $MODAL_FLAG
 
     # get the "model_name_or_path" from the first line of the SWEBENCH_FORMAT_JSONL
@@ -153,5 +161,6 @@ else
         --cache_level instance \
         --max_workers $N_PROCESS \
         --run_id $RUN_ID \
+        --namespace $NAMESPACE \
         $MODAL_FLAG
 fi
