@@ -180,7 +180,7 @@ def get_instance_docker_image(
             docker_image_prefix = 'docker.io/starryzhang/'
         elif DATASET_TYPE == 'SWE-bench':
             if os.environ.get('USE_LOGICSTAR', 'false').lower() == 'true':
-                docker_image_prefix = '10.10.100.19:5000/swebench/'
+                docker_image_prefix = '10.10.100.19:5001/logicstar/'
             else:
                 docker_image_prefix = 'docker.io/swebench/'
         repo, name = instance_id.split('__')
