@@ -40,6 +40,7 @@ from openhands.events.serialization.event import event_to_dict
 from openhands.events.utils import get_pairs_from_events
 from openhands.memory.condenser import get_condensation_metadata
 
+import httpx
 
 class EvalMetadata(BaseModel):
     agent_class: str
@@ -638,6 +639,7 @@ def is_fatal_evaluation_error(error: str | None) -> bool:
         AgentRuntimeDisconnectedError,
         AgentRuntimeNotFoundError,
         ConnectionError,
+        httpx.ConnectError,
     ]
 
     if any(exception.__name__ in error for exception in FATAL_EXCEPTIONS):
