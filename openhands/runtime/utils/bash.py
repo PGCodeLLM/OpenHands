@@ -480,6 +480,12 @@ class BashSession:
         command = action.command.strip()
         is_input: bool = action.is_input
 
+        if self._is_special_key(command):
+            logger.debug(f'SENDING SPECIAL KEY COMMAND: {command!r}')
+            logger.debug('Setting is_input = True for special key command')
+            action.is_input = True
+            is_input = True
+
         # If the previous command is not completed, we need to check if the command is empty
         if self.prev_status not in {
             BashCommandStatus.CONTINUE,
