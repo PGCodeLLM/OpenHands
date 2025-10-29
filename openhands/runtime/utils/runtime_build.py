@@ -183,7 +183,7 @@ def build_runtime_image_in_folder(
         f'oh_v{oh_version}_{get_tag_for_versioned_image(base_image)}'
     )
     versioned_image_name = f'{runtime_image_repo}:{versioned_tag}'
-    source_tag = f'{lock_tag}_{get_hash_for_source_files()}'
+    source_tag = f'{lock_tag}_{get_hash_for_source_files()}_{get_hash_for_source_files(subdir="../../openhands-aci")}'
     hash_image_name = f'{runtime_image_repo}:{source_tag}'
 
     logger.info(f'Building image: {hash_image_name}')
@@ -268,6 +268,19 @@ def prep_build_folder(
     project_root = openhands_source_dir.parent
     logger.debug(f'Building source distribution using project root: {project_root}')
 
+    openhands_aci_source_dir = project_root / "../openhands-aci"
+
+    # Copy the 'openhands-aci' directory (Source code)
+    shutil.copytree(
+        openhands_aci_source_dir,
+        Path(build_folder, 'openhands-aci'),
+        ignore=shutil.ignore_patterns(
+            '.*/',
+            '__pycache__/',
+            '*.pyc',
+        ),
+    )
+
     # Copy the 'openhands' directory (Source code)
     shutil.copytree(
         openhands_source_dir,
@@ -295,7 +308,7 @@ def prep_build_folder(
         for cert_file in certs_dir.iterdir():
             if cert_file.is_file():
                 shutil.copy2(cert_file, dest_certs_dir / cert_file.name)
-        
+
     # Create a Dockerfile and write it to build_folder
     dockerfile_content = _generate_dockerfile(
         base_image,
@@ -345,8 +358,8 @@ def get_tag_for_versioned_image(base_image: str) -> str:
     return base_image.replace('/', '_s_').replace(':', '_t_').lower()[-96:]
 
 
-def get_hash_for_source_files() -> str:
-    openhands_source_dir = Path(openhands.__file__).parent
+def get_hash_for_source_files(subdir:str = '.') -> str:
+    openhands_source_dir = Path(openhands.__file__).parent / subdir
     dir_hash = dirhash(
         openhands_source_dir,
         'md5',
