@@ -350,6 +350,46 @@ doc = ["doc8", "sphinx (>=7.0.0)", "sphinx-autobuild", "sphinx-autodoc-typehints
 test = ["dateparser (==1.*)", "pre-commit", "pytest", "pytest-cov", "pytest-mock", "pytz (==2021.1)", "simplejson (==3.*)"]
 
 [[package]]
+name = "ast-grep-py"
+version = "0.39.5"
+description = "Structural Search and Rewrite code at large scale using precise AST pattern."
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "ast_grep_py-0.39.5-cp310-cp310-manylinux_2_28_aarch64.whl", hash = "sha256:366ab7dae7837b0a512395e1ce5fc7b84720b8bee9c81b6c0f26d3ca30b67d6b"},
+    {file = "ast_grep_py-0.39.5-cp310-cp310-manylinux_2_28_x86_64.whl", hash = "sha256:435d955c4ed4b32f28a4100facd15120eb2093165a2da5419306fd19e781fe47"},
+    {file = "ast_grep_py-0.39.5-cp310-cp310-win32.whl", hash = "sha256:65b064349baeb9e3a70e2a43c7f55ccc26a5be76b808ee138eecacf11087d815"},
+    {file = "ast_grep_py-0.39.5-cp310-cp310-win_amd64.whl", hash = "sha256:d075690901abbc4499c91daff0cbf4106052e0f4064570a4261f21348ba04e66"},
+    {file = "ast_grep_py-0.39.5-cp311-cp311-macosx_10_12_x86_64.whl", hash = "sha256:a85fd956ac01d4148a14e72be554ccc0a8ba3fdf46e0b1c1d07155e22f33c884"},
+    {file = "ast_grep_py-0.39.5-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:c43ba3ee004f1caf9eee268e5d07e32b534757957613fa9ef54e2be1c73b4681"},
+    {file = "ast_grep_py-0.39.5-cp311-cp311-manylinux_2_28_aarch64.whl", hash = "sha256:0a27dff8dc37f813dce6956029c1ebb51cb3e594f0c63ce305be70123e7f49b5"},
+    {file = "ast_grep_py-0.39.5-cp311-cp311-manylinux_2_28_x86_64.whl", hash = "sha256:e6f91739f3cf68b5fc7cd1feed23beb6daca88a04068aba0a57718f575aff7c8"},
+    {file = "ast_grep_py-0.39.5-cp311-cp311-win32.whl", hash = "sha256:8f4b0dfa90448307bcb476ad756aa711eadc31c7e6ccfa458ffb6200aaea837d"},
+    {file = "ast_grep_py-0.39.5-cp311-cp311-win_amd64.whl", hash = "sha256:214aa195f97d4c8f3dacb5e047c4e9cf1d05f5617e22e0766f6722ef8b06dc78"},
+    {file = "ast_grep_py-0.39.5-cp312-cp312-macosx_10_12_x86_64.whl", hash = "sha256:a5ad43f9b7f304b9dd4acd051fc6356aecc2fb6b9f00aa38cbd96cbf806be9c1"},
+    {file = "ast_grep_py-0.39.5-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:3407aa72780ddab6f1ff1b60d0aae2c9b959f3e64b3ab9aa7545b5a6fc98db33"},
+    {file = "ast_grep_py-0.39.5-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:e011a55ff4728c6836dffdfc4df6c3ebb077fbefdbd07c710d6284b0b83c020a"},
+    {file = "ast_grep_py-0.39.5-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:da97f516d317b00f04048f430641a31464bf2e9b63fd58c797268ac9f4893acb"},
+    {file = "ast_grep_py-0.39.5-cp312-cp312-win32.whl", hash = "sha256:699d80b024357987ca3191b02b3c5d0d65e88deed46cac37bfb32be6e940210f"},
+    {file = "ast_grep_py-0.39.5-cp312-cp312-win_amd64.whl", hash = "sha256:8056d12216a6831082a533bac71fef46e6933803f5adf0809cd8bcdcc9c33b70"},
+    {file = "ast_grep_py-0.39.5-cp313-cp313-macosx_10_12_x86_64.whl", hash = "sha256:bb4e033fa06ba2f7c2c78b36c7d236236f56f5133223dba2fabb4b4381723287"},
+    {file = "ast_grep_py-0.39.5-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:b4d0fac3d45401acfac1ae0cf80bed4f980aeed8188d9f01f47f9f671a2908ab"},
+    {file = "ast_grep_py-0.39.5-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:2b907e937e91075fb0ee64922ca9350bee4527d1140c56c9d7f8c83068f23b5b"},
+    {file = "ast_grep_py-0.39.5-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:34329ec714b57c93a756f6bea67be47e83a4109a4a23f6ac220bf8504b26c533"},
+    {file = "ast_grep_py-0.39.5-cp313-cp313-win32.whl", hash = "sha256:3ebc58cb4f6174775208c2fa7fe2472c12c9fee46b6c630aaa913b645d687b2f"},
+    {file = "ast_grep_py-0.39.5-cp313-cp313-win_amd64.whl", hash = "sha256:6d86a1ac9c6563b76518363d7117e446efc25da6dc0aa89980f15c216c06b99a"},
+    {file = "ast_grep_py-0.39.5-cp39-cp39-manylinux_2_28_aarch64.whl", hash = "sha256:b5835960fa2fea0f02674e087294fdeceb0acffd1d218d1b1399b12b6d42fa2c"},
+    {file = "ast_grep_py-0.39.5-cp39-cp39-manylinux_2_28_x86_64.whl", hash = "sha256:4bd3d9048b168c3e61c859a519aa235e62a23a2d567c12cf12775d2ca75e3249"},
+    {file = "ast_grep_py-0.39.5-cp39-cp39-win32.whl", hash = "sha256:975f6bf3447e02bd9b64ad404d4deee77210f854f5ddf060309036f7c09fe988"},
+    {file = "ast_grep_py-0.39.5-cp39-cp39-win_amd64.whl", hash = "sha256:f19ed467fdc9d8427c57402fb30e2215946f6b51663d85e6e3523dfeade78035"},
+    {file = "ast_grep_py-0.39.5.tar.gz", hash = "sha256:e3035562970271f6ee411735f3e08ed6b7b86448833c3520f44eca807d477a3c"},
+]
+
+[package.extras]
+test = ["pytest (>=7)"]
+
+[[package]]
 name = "asttokens"
 version = "3.0.0"
 description = "Annotate AST trees with source code positions"
@@ -6532,6 +6572,7 @@ files = []
 develop = true
 
 [package.dependencies]
+ast-grep-py = "0.39.5"
 beautifulsoup4 = ">=4.12.3"
 binaryornot = "^0.4.4"
 cachetools = "^5.5.2"
