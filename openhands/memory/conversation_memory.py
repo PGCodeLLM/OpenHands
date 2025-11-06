@@ -426,7 +426,13 @@ class ConversationMemory:
 
             message = Message(role='user', content=content)
         elif isinstance(obs, FileEditObservation):
-            text = truncate_content(str(obs), max_message_chars)
+            obs_str = str(obs)
+            if "did not appear verbatim" in obs_str and not self._has_path_create_or_view_in_earlier_events(obs.path, current_index, events):
+                obs_str += (
+                    "\nNote: The given file path content is not viewed using the `view` command prior to editing. "
+                    "Please ensure you read the relevant file content using `view` command  (optionally with the `view_range` parameter) before editing."
+                )
+            text = truncate_content(obs_str, max_message_chars)
             message = Message(role='user', content=[TextContent(text=text)])
         elif isinstance(obs, FileReadObservation):
             message = Message(
@@ -720,6 +726,29 @@ class ConversationMemory:
                 if any(
                     agent.name == agent_name for agent in event.microagent_knowledge
                 ):
+                    return True
+        return False
+
+    def _has_path_create_or_view_in_earlier_events(
+        self, filepath: str, current_index: int, events: list[Event]
+    ) -> bool:
+        """Check if a file path appears in any earlier FileReadAction.
+
+        Args:
+            filepath: The file path to look for FileReadAction for
+            current_index: The index of the current event in the events list
+            events: The list of all events
+
+        Returns:
+            bool: True if the file path appears in an earlier FileReadAction, False otherwise
+        """
+        for event in events[:current_index]:
+            # Note that this check includes the WORKSPACE_CONTEXT
+            if isinstance(event, FileReadAction):
+                if event.path == filepath:
+                    return True
+            if isinstance(event, FileEditAction):
+                if event.command == "create" and event.path == filepath:
                     return True
         return False
 

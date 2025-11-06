@@ -131,6 +131,7 @@ RUN \
     touch /openhands/code/openhands/__init__.py
 
 COPY ./code/pyproject.toml ./code/poetry.lock /openhands/code/
+COPY ./openhands-aci /openhands/openhands-aci
 
 {{ install_dependencies() }}
 
@@ -146,6 +147,7 @@ RUN if [ -d /openhands/code/openhands ]; then rm -rf /openhands/code/openhands; 
 COPY ./code/pyproject.toml ./code/poetry.lock /openhands/code/
 
 COPY ./code/openhands /openhands/code/openhands
+COPY ./openhands-aci /openhands/openhands-aci
 RUN chmod a+rwx /openhands/code/openhands/__init__.py
 
 

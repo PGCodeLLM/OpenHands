@@ -379,6 +379,30 @@ def initialize_runtime(
     logger.info(obs, extra={'msg_type': 'OBSERVATION'})
     assert_and_raise(obs.exit_code == 0, f'Failed to remove git remotes: {str(obs)}')
 
+
+    # This actions installs the module in editable mode
+    action = CmdRunAction(
+        command = f'cd "/workspace/{workspace_dir_name}" && pip install -e .'
+    )
+    action.set_hard_timeout(600)
+    logger.info(action, extra={'msg_type': 'ACTION'})
+    obs = runtime.run_action(action)
+    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
+
+
+    action = CmdRunAction(
+        command = f'echo "export PYTHONPATH=\\"/workspace/{workspace_dir_name}:${{PYTHONPATH}}\\"" >> ~/.bashrc'
+    )
+    action.set_hard_timeout(10)
+    logger.info(action, extra={'msg_type': 'ACTION'})
+    obs = runtime.run_action(action)
+    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
+    assert_and_raise(
+        obs.exit_code == 0,
+        f'Failed to add correct export to bashrc: {str(obs)}',
+    )
+
+
     if metadata.details['mode'] == 'swt-ci':
         # set up repo
         setup_commands = []
