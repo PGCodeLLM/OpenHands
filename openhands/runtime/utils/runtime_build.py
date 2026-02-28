@@ -79,12 +79,12 @@ def get_runtime_image_repo_and_tag(base_image: str) -> tuple[str, str]:
 
         if ':' not in base_image:
             base_image = base_image + ':latest'
-        repo, tag = base_image.split(':')
+        repo, tag = base_image.rsplit(':', 1)
         return repo, tag
     else:
         if ':' not in base_image:
             base_image = base_image + ':latest'
-        [repo, tag] = base_image.split(':')
+        [repo, tag] = base_image.rsplit(':', 1)
 
         # Hash the repo if it's too long
         if len(repo) > 32:

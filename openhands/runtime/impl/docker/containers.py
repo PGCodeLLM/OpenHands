@@ -9,6 +9,7 @@ def stop_all_containers(prefix: str) -> None:
             try:
                 if container.name.startswith(prefix):
                     container.stop()
+                    container.remove(force=True)
             except docker.errors.APIError:
                 pass
             except docker.errors.NotFound:
